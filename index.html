@@ -356,45 +356,6 @@
     to { opacity: 1; }
   }
 
-  /* Sorten-Marquee */
-  .marquee {
-    overflow: hidden;
-    border-top: 1px solid var(--line-soft);
-    border-bottom: 1px solid var(--line-soft);
-    padding: 22px 0;
-    background: var(--paper-warm);
-    position: relative;
-    z-index: 2;
-  }
-
-  .marquee-track {
-    display: flex;
-    gap: 64px;
-    white-space: nowrap;
-    animation: scroll 50s linear infinite;
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 24px;
-    color: var(--ink-soft);
-  }
-
-  .marquee-track > span {
-    display: flex;
-    align-items: center;
-    gap: 64px;
-  }
-
-  .marquee-track > span::after {
-    content: '·';
-    color: var(--ink-mute);
-    font-size: 32px;
-  }
-
-  @keyframes scroll {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
-
   /* Sorten-Sektion */
   .sorten {
     padding: 140px 56px;
@@ -800,8 +761,6 @@
   @media (max-width: 500px) {
     .prozess-grid { grid-template-columns: 1fr; }
     .footer-grid { grid-template-columns: 1fr; }
-    .marquee-track { font-size: 20px; gap: 40px; }
-    .marquee-track > span { gap: 40px; }
   }
 </style>
 </head>
@@ -911,23 +870,6 @@
     </div>
   </div>
 </section>
-
-<div class="marquee">
-  <div class="marquee-track">
-    <span>Kräuterseitlinge</span>
-    <span>Shiitake</span>
-    <span>Austernseitlinge</span>
-    <span>Limonenseitlinge</span>
-    <span>Kräuterseitlinge</span>
-    <span>Shiitake</span>
-    <span>Austernseitlinge</span>
-    <span>Limonenseitlinge</span>
-    <span>Kräuterseitlinge</span>
-    <span>Shiitake</span>
-    <span>Austernseitlinge</span>
-    <span>Limonenseitlinge</span>
-  </div>
-</div>
 
 <section class="sorten" id="sorten">
   <div class="section-header">
