@@ -235,10 +235,11 @@
   .hero-visual {
     position: relative;
     aspect-ratio: 3/4;
+    width: 100%;
+    max-width: 460px;
+    justify-self: end;
     opacity: 0;
     animation: fadeIn 1.4s ease 0.6s forwards;
-    max-width: 460px;
-    margin-left: auto;
   }
 
   .label-card {
@@ -296,17 +297,21 @@
     margin: 12px 0;
   }
 
-  .label-illustration svg {
-    width: 75%;
-    height: auto;
+  .label-illustration img {
+    max-width: 75%;
     max-height: 220px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    mix-blend-mode: multiply;
   }
 
   .label-tags {
+    position: relative;
     display: flex;
     justify-content: space-between;
-    align-items: end;
-    gap: 12px;
+    align-items: center;
+    min-height: 28px;
     padding-top: 12px;
     border-top: 1px solid var(--line-soft);
     font-size: 9px;
@@ -316,6 +321,11 @@
   }
 
   .bioland-badge {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    margin-top: 6px;
     background: var(--bioland);
     color: white;
     padding: 6px 10px;
@@ -723,7 +733,27 @@
       gap: 60px;
     }
 
-    .hero-visual { max-width: 360px; margin: 0 auto; width: 100%; }
+    .hero-visual { max-width: 360px; width: 100%; justify-self: center; }
+
+    .label-tags {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas:
+        "left right"
+        "badge badge";
+      gap: 14px;
+      align-items: center;
+      min-height: 0;
+    }
+    .label-tags > span:nth-child(1) { grid-area: left; }
+    .label-tags > span:nth-child(3) { grid-area: right; text-align: right; }
+    .bioland-badge {
+      position: static;
+      transform: none;
+      grid-area: badge;
+      justify-self: center;
+      margin: 0;
+    }
 
     .section-header {
       grid-template-columns: 1fr;
@@ -810,55 +840,7 @@
         <div class="label-weight">200 g · frisch</div>
 
         <div class="label-illustration">
-          <!-- Stilisierte Stich-Illustration Kräuterseitlinge -->
-          <svg viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <pattern id="hatchFine" patternUnits="userSpaceOnUse" width="2.5" height="2.5" patternTransform="rotate(45)">
-                <line x1="0" y1="0" x2="0" y2="2.5" stroke="#5a5048" stroke-width="0.35"/>
-              </pattern>
-              <pattern id="hatchCross" patternUnits="userSpaceOnUse" width="3" height="3">
-                <line x1="0" y1="0" x2="0" y2="3" stroke="#5a5048" stroke-width="0.3"/>
-                <line x1="0" y1="0" x2="3" y2="0" stroke="#5a5048" stroke-width="0.3"/>
-              </pattern>
-            </defs>
-
-            <!-- Hinterer großer Pilz -->
-            <g>
-              <!-- Stiel -->
-              <path d="M 70 130 Q 65 170 68 215 Q 72 222 85 222 Q 95 222 100 215 Q 105 175 100 130 Z"
-                    fill="#f5f2ea" stroke="#2a2622" stroke-width="1.2"/>
-              <path d="M 75 145 Q 73 180 76 210" fill="none" stroke="#5a5048" stroke-width="0.4"/>
-              <path d="M 92 145 Q 94 180 91 210" fill="none" stroke="#5a5048" stroke-width="0.4"/>
-              <!-- Hut -->
-              <path d="M 55 110 Q 50 90 65 80 Q 85 72 100 80 Q 115 88 110 115 Q 105 132 85 132 Q 60 132 55 110 Z"
-                    fill="url(#hatchFine)" stroke="#2a2622" stroke-width="1.2"/>
-              <path d="M 58 105 Q 70 95 90 92 Q 105 92 108 100" fill="none" stroke="#2a2622" stroke-width="0.5"/>
-            </g>
-
-            <!-- Mittlerer Pilz -->
-            <g transform="translate(50, 20)">
-              <path d="M 80 125 Q 78 165 80 210 Q 84 218 95 218 Q 106 218 110 210 Q 112 170 110 125 Z"
-                    fill="#f5f2ea" stroke="#2a2622" stroke-width="1.2"/>
-              <path d="M 85 140 Q 84 175 86 205" fill="none" stroke="#5a5048" stroke-width="0.4"/>
-              <path d="M 103 140 Q 104 175 102 205" fill="none" stroke="#5a5048" stroke-width="0.4"/>
-              <path d="M 65 108 Q 62 88 80 80 Q 100 75 115 85 Q 125 95 120 115 Q 115 130 95 130 Q 70 130 65 108 Z"
-                    fill="url(#hatchFine)" stroke="#2a2622" stroke-width="1.2"/>
-              <path d="M 68 102 Q 80 92 100 90 Q 115 92 120 100" fill="none" stroke="#2a2622" stroke-width="0.5"/>
-            </g>
-
-            <!-- Vorderer kleiner Pilz -->
-            <g>
-              <path d="M 130 175 Q 128 200 130 225 Q 134 232 144 232 Q 154 232 156 225 Q 158 205 156 175 Z"
-                    fill="#f5f2ea" stroke="#2a2622" stroke-width="1.2"/>
-              <path d="M 134 185 Q 133 210 135 225" fill="none" stroke="#5a5048" stroke-width="0.4"/>
-              <path d="M 152 185 Q 153 210 151 225" fill="none" stroke="#5a5048" stroke-width="0.4"/>
-              <path d="M 120 165 Q 116 150 130 142 Q 145 140 158 148 Q 168 158 165 172 Q 160 182 145 182 Q 122 182 120 165 Z"
-                    fill="url(#hatchFine)" stroke="#2a2622" stroke-width="1.2"/>
-            </g>
-
-            <!-- Bodenlinie -->
-            <path d="M 30 232 Q 100 234 175 230" stroke="#5a5048" stroke-width="0.6" fill="none" opacity="0.6"/>
-          </svg>
+          <img src="images/Kraeuterseitling.webp" alt="Bio-Kräuterseitlinge">
         </div>
 
         <div class="label-tags">
