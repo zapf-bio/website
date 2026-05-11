@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Zapf's Biohof — Bio-Edelpilze aus Berghaupten</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f5f2ea;
+    --paper-warm: #ebe5d4;
+    --paper-edge: #d8cdb3;
+    --ink: #2a2622;
+    --ink-soft: #5a5048;
+    --ink-mute: #8a7f70;
+    --bioland: #4a7c2a;
+    --line: #c8bfa8;
+    --line-soft: #e0d8c4;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.65;
+    overflow-x: hidden;
+    font-weight: 300;
+  }
+
+  /* Subtile Papier-Textur, dezenter als zuvor */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.35;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.16 0 0 0 0 0.14 0 0 0 0 0.12 0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    z-index: 1;
+  }
+
+  /* Logo-Komponente — exakt wie auf Etikett */
+  .logo {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: var(--ink);
+    font-family: 'Cormorant Garamond', serif;
+    line-height: 1;
+  }
+
+  .logo-top {
+    font-weight: 600;
+    font-size: 1em;
+    letter-spacing: 0.02em;
+    padding: 0 0.6em 0.25em;
+    border-bottom: 1.5px solid currentColor;
+  }
+
+  .logo-bottom {
+    font-weight: 500;
+    font-size: 0.55em;
+    letter-spacing: 0.35em;
+    padding-top: 0.45em;
+    padding-left: 0.35em;
+  }
+
+  /* Header */
+  header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 20px 56px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(10px);
+    background: rgba(245, 242, 234, 0.85);
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  header .logo { font-size: 22px; }
+
+  nav ul {
+    display: flex;
+    gap: 44px;
+    list-style: none;
+  }
+
+  nav a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 400;
+    transition: color 0.3s ease;
+    position: relative;
+  }
+
+  nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--ink);
+    transition: width 0.4s ease;
+  }
+
+  nav a:hover::after { width: 100%; }
+  nav a:hover { color: var(--ink); }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    padding: 160px 56px 100px;
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 100px;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-bottom: 36px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.2s forwards;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    width: 36px;
+    height: 1px;
+    background: var(--ink-mute);
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: clamp(52px, 7.5vw, 104px);
+    line-height: 1;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    margin-bottom: 36px;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.4s forwards;
+  }
+
+  h1 .accent {
+    font-weight: 300;
+    font-style: italic;
+    display: block;
+    color: var(--ink-soft);
+  }
+
+  .hero-text {
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--ink-soft);
+    max-width: 480px;
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.6s forwards;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 28px;
+    align-items: center;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.8s forwards;
+  }
+
+  .btn-primary {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 17px 38px;
+    border: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 400;
+  }
+
+  .btn-primary:hover {
+    background: var(--ink-soft);
+    transform: translateY(-1px);
+  }
+
+  .btn-text {
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 4px;
+    transition: gap 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-text:hover { gap: 14px; }
+
+  /* Hero-Visual: stilisiert wie das Etikett */
+  .hero-visual {
+    position: relative;
+    aspect-ratio: 3/4;
+    opacity: 0;
+    animation: fadeIn 1.4s ease 0.6s forwards;
+    max-width: 460px;
+    margin-left: auto;
+  }
+
+  .label-card {
+    position: absolute;
+    inset: 0;
+    background: var(--paper);
+    border: 6px solid var(--paper-edge);
+    box-shadow:
+      0 1px 0 rgba(0,0,0,0.04),
+      0 30px 60px -20px rgba(42, 38, 34, 0.15);
+    display: flex;
+    flex-direction: column;
+    padding: 40px 36px 32px;
+  }
+
+  .label-card-inner {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--line-soft);
+    padding: 28px 24px;
+    position: relative;
+  }
+
+  .label-logo {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  .label-logo .logo { font-size: 28px; }
+
+  .label-product {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    text-align: center;
+    color: var(--ink);
+    margin-bottom: 4px;
+    font-weight: 500;
+  }
+
+  .label-weight {
+    text-align: center;
+    font-size: 12px;
+    color: var(--ink-mute);
+    letter-spacing: 0.15em;
+    margin-bottom: 16px;
+  }
+
+  /* Stich-Illustration Pilz */
+  .label-illustration {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 12px 0;
+  }
+
+  .label-illustration svg {
+    width: 75%;
+    height: auto;
+    max-height: 220px;
+  }
+
+  .label-tags {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--line-soft);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+
+  .bioland-badge {
+    background: var(--bioland);
+    color: white;
+    padding: 6px 10px;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 13px;
+    letter-spacing: 0;
+    text-transform: none;
+    border-radius: 1px;
+  }
+
+  /* Floating "regional"-Tag wie auf dem Etikett */
+  .regional-tag {
+    position: absolute;
+    top: 24%;
+    left: -28px;
+    background: var(--paper-warm);
+    border: 1px dashed var(--line);
+    border-radius: 24px;
+    padding: 14px 20px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    color: var(--ink);
+    text-align: center;
+    line-height: 1.3;
+    z-index: 3;
+    transform: rotate(-6deg);
+    box-shadow: 0 8px 24px -10px rgba(0,0,0,0.15);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* Sorten-Marquee */
+  .marquee {
+    overflow: hidden;
+    border-top: 1px solid var(--line-soft);
+    border-bottom: 1px solid var(--line-soft);
+    padding: 22px 0;
+    background: var(--paper-warm);
+    position: relative;
+    z-index: 2;
+  }
+
+  .marquee-track {
+    display: flex;
+    gap: 64px;
+    white-space: nowrap;
+    animation: scroll 50s linear infinite;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 24px;
+    color: var(--ink-soft);
+  }
+
+  .marquee-track > span {
+    display: flex;
+    align-items: center;
+    gap: 64px;
+  }
+
+  .marquee-track > span::after {
+    content: '·';
+    color: var(--ink-mute);
+    font-size: 32px;
+  }
+
+  @keyframes scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* Sorten-Sektion */
+  .sorten {
+    padding: 140px 56px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .section-header {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 80px;
+    margin-bottom: 100px;
+    align-items: end;
+  }
+
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--ink-mute);
+  }
+
+  h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: clamp(38px, 4.8vw, 64px);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+
+  h2 em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--ink-soft);
+  }
+
+  .sorten-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--line-soft);
+    border: 1px solid var(--line-soft);
+  }
+
+  .sorte-card {
+    background: var(--paper);
+    padding: 56px 48px;
+    transition: background 0.4s ease;
+    position: relative;
+    min-height: 440px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sorte-card:hover {
+    background: var(--paper-warm);
+  }
+
+  .sorte-card.upcoming {
+    background: var(--paper-warm);
+  }
+
+  .sorte-card.upcoming .sorte-illustration svg {
+    opacity: 0.45;
+  }
+
+  .sorte-card.upcoming h3,
+  .sorte-card.upcoming p {
+    color: var(--ink-soft);
+  }
+
+  .sorte-status {
+    position: absolute;
+    top: 32px;
+    right: 36px;
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    padding: 6px 12px;
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    background: var(--paper);
+  }
+
+  .sorte-status.available {
+    color: var(--bioland);
+    border-color: var(--bioland);
+  }
+
+  .sorte-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--ink-mute);
+    margin-bottom: 24px;
+    letter-spacing: 0.05em;
+  }
+
+  .sorte-illustration {
+    height: 120px;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+  }
+
+  .sorte-illustration svg {
+    width: auto;
+    height: 100%;
+    max-width: 140px;
+  }
+
+  .sorte-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 1.1;
+    margin-bottom: 6px;
+    color: var(--ink);
+  }
+
+  .sorte-latin {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--ink-mute);
+    margin-bottom: 18px;
+  }
+
+  .sorte-card p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    margin-top: auto;
+  }
+
+  /* Philosophie */
+  .philosophie {
+    padding: 140px 56px;
+    background: var(--paper-warm);
+    position: relative;
+    z-index: 2;
+    border-top: 1px solid var(--line-soft);
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .philosophie-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: center;
+  }
+
+  .philosophie-text {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--ink-soft);
+  }
+
+  .philosophie-text p + p { margin-top: 20px; }
+
+  .philosophie-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 30px;
+    line-height: 1.35;
+    color: var(--ink);
+    padding-left: 36px;
+    border-left: 1px solid var(--line);
+    font-weight: 400;
+  }
+
+  .philosophie-quote-author {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-top: 28px;
+    font-weight: 400;
+  }
+
+  /* Prozess */
+  .prozess {
+    padding: 140px 56px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .prozess-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 56px;
+    margin-top: 80px;
+  }
+
+  .prozess-step {
+    position: relative;
+    padding-top: 28px;
+    border-top: 1px solid var(--ink);
+  }
+
+  .prozess-step-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--ink-mute);
+    margin-bottom: 18px;
+  }
+
+  .prozess-step h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 24px;
+    margin-bottom: 14px;
+    color: var(--ink);
+  }
+
+  .prozess-step p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+  }
+
+  /* Hofladen */
+  .hofladen {
+    padding: 140px 56px;
+    background: var(--paper-warm);
+    position: relative;
+    z-index: 2;
+    border-top: 1px solid var(--line-soft);
+  }
+
+  .hofladen-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: start;
+  }
+
+  .info-list {
+    list-style: none;
+    margin-top: 40px;
+  }
+
+  .info-list li {
+    padding: 22px 0;
+    border-bottom: 1px solid var(--line-soft);
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 32px;
+    align-items: baseline;
+  }
+
+  .info-list li:first-child { border-top: 1px solid var(--line-soft); }
+
+  .info-label {
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+
+  .info-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+
+  /* Footer */
+  footer {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 80px 56px 32px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .footer-grid {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 80px;
+    padding-bottom: 56px;
+    border-bottom: 1px solid rgba(245, 242, 234, 0.12);
+  }
+
+  footer .logo { font-size: 30px; color: var(--paper); }
+
+  .footer-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 17px;
+    margin-top: 28px;
+    color: var(--paper-warm);
+    max-width: 280px;
+    line-height: 1.5;
+  }
+
+  .footer-col h5 {
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--paper);
+    margin-bottom: 24px;
+    font-weight: 500;
+  }
+
+  .footer-col ul {
+    list-style: none;
+  }
+
+  .footer-col ul li {
+    margin-bottom: 12px;
+  }
+
+  .footer-col a, .footer-col li {
+    color: var(--paper-warm);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+  }
+
+  .footer-col a:hover { color: var(--paper); }
+
+  .footer-bottom {
+    max-width: 1300px;
+    margin: 28px auto 0;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--paper-warm);
+    opacity: 0.6;
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    header { padding: 14px 24px; }
+    nav { display: none; }
+
+    .hero {
+      grid-template-columns: 1fr;
+      padding: 130px 24px 60px;
+      gap: 60px;
+    }
+
+    .hero-visual { max-width: 360px; margin: 0 auto; width: 100%; }
+
+    .section-header {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      margin-bottom: 60px;
+    }
+
+    .sorten, .philosophie, .prozess, .hofladen { padding: 80px 24px; }
+
+    .sorten-grid { grid-template-columns: 1fr; }
+
+    .philosophie-content,
+    .hofladen-content {
+      grid-template-columns: 1fr;
+      gap: 50px;
+    }
+
+    .philosophie-quote { font-size: 24px; padding-left: 24px; }
+
+    .prozess-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+    footer { padding: 60px 24px 24px; }
+
+    .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+
+    .info-list li {
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+
+    .regional-tag { left: -10px; font-size: 12px; padding: 10px 14px; }
+  }
+
+  @media (max-width: 500px) {
+    .prozess-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .marquee-track { font-size: 20px; gap: 40px; }
+    .marquee-track > span { gap: 40px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="#" class="logo">
+    <span class="logo-top">ZAPF'S</span>
+    <span class="logo-bottom">BIOHOF</span>
+  </a>
+  <nav>
+    <ul>
+      <li><a href="#sorten">Sorten</a></li>
+      <li><a href="#philosophie">Philosophie</a></li>
+      <li><a href="#prozess">Aufzucht</a></li>
+      <li><a href="#hofladen">Hofladen</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="hero">
+  <div>
+    <div class="hero-eyebrow">Bio-Edelpilze · Berghaupten · seit 2024</div>
+    <h1>Pilze, die wachsen<br><span class="accent">wie sie sollen.</span></h1>
+    <p class="hero-text">
+      Auf unserem Hof in Berghaupten ziehen wir Edelpilze in handgeernteten Substraten aus regionalem Bio-Stroh und Buchenholz auf. Bioland-zertifiziert. Ohne Eile. Mit dem Respekt, den ein lebendiger Organismus verdient.
+    </p>
+    <div class="hero-actions">
+      <a href="#sorten" class="btn-primary">Unsere Sorten</a>
+      <a href="#hofladen" class="btn-text">Im Hofladen vorbeischauen →</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="regional-tag">
+      Wir produzieren<br>regional
+    </div>
+    <div class="label-card">
+      <div class="label-card-inner">
+        <div class="label-logo">
+          <span class="logo">
+            <span class="logo-top">ZAPF'S</span>
+            <span class="logo-bottom">BIOHOF</span>
+          </span>
+        </div>
+        <div class="label-product">Bio-Kräuterseitlinge</div>
+        <div class="label-weight">200 g · frisch</div>
+
+        <div class="label-illustration">
+          <!-- Stilisierte Stich-Illustration Kräuterseitlinge -->
+          <svg viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="hatchFine" patternUnits="userSpaceOnUse" width="2.5" height="2.5" patternTransform="rotate(45)">
+                <line x1="0" y1="0" x2="0" y2="2.5" stroke="#5a5048" stroke-width="0.35"/>
+              </pattern>
+              <pattern id="hatchCross" patternUnits="userSpaceOnUse" width="3" height="3">
+                <line x1="0" y1="0" x2="0" y2="3" stroke="#5a5048" stroke-width="0.3"/>
+                <line x1="0" y1="0" x2="3" y2="0" stroke="#5a5048" stroke-width="0.3"/>
+              </pattern>
+            </defs>
+
+            <!-- Hinterer großer Pilz -->
+            <g>
+              <!-- Stiel -->
+              <path d="M 70 130 Q 65 170 68 215 Q 72 222 85 222 Q 95 222 100 215 Q 105 175 100 130 Z"
+                    fill="#f5f2ea" stroke="#2a2622" stroke-width="1.2"/>
+              <path d="M 75 145 Q 73 180 76 210" fill="none" stroke="#5a5048" stroke-width="0.4"/>
+              <path d="M 92 145 Q 94 180 91 210" fill="none" stroke="#5a5048" stroke-width="0.4"/>
+              <!-- Hut -->
+              <path d="M 55 110 Q 50 90 65 80 Q 85 72 100 80 Q 115 88 110 115 Q 105 132 85 132 Q 60 132 55 110 Z"
+                    fill="url(#hatchFine)" stroke="#2a2622" stroke-width="1.2"/>
+              <path d="M 58 105 Q 70 95 90 92 Q 105 92 108 100" fill="none" stroke="#2a2622" stroke-width="0.5"/>
+            </g>
+
+            <!-- Mittlerer Pilz -->
+            <g transform="translate(50, 20)">
+              <path d="M 80 125 Q 78 165 80 210 Q 84 218 95 218 Q 106 218 110 210 Q 112 170 110 125 Z"
+                    fill="#f5f2ea" stroke="#2a2622" stroke-width="1.2"/>
+              <path d="M 85 140 Q 84 175 86 205" fill="none" stroke="#5a5048" stroke-width="0.4"/>
+              <path d="M 103 140 Q 104 175 102 205" fill="none" stroke="#5a5048" stroke-width="0.4"/>
+              <path d="M 65 108 Q 62 88 80 80 Q 100 75 115 85 Q 125 95 120 115 Q 115 130 95 130 Q 70 130 65 108 Z"
+                    fill="url(#hatchFine)" stroke="#2a2622" stroke-width="1.2"/>
+              <path d="M 68 102 Q 80 92 100 90 Q 115 92 120 100" fill="none" stroke="#2a2622" stroke-width="0.5"/>
+            </g>
+
+            <!-- Vorderer kleiner Pilz -->
+            <g>
+              <path d="M 130 175 Q 128 200 130 225 Q 134 232 144 232 Q 154 232 156 225 Q 158 205 156 175 Z"
+                    fill="#f5f2ea" stroke="#2a2622" stroke-width="1.2"/>
+              <path d="M 134 185 Q 133 210 135 225" fill="none" stroke="#5a5048" stroke-width="0.4"/>
+              <path d="M 152 185 Q 153 210 151 225" fill="none" stroke="#5a5048" stroke-width="0.4"/>
+              <path d="M 120 165 Q 116 150 130 142 Q 145 140 158 148 Q 168 158 165 172 Q 160 182 145 182 Q 122 182 120 165 Z"
+                    fill="url(#hatchFine)" stroke="#2a2622" stroke-width="1.2"/>
+            </g>
+
+            <!-- Bodenlinie -->
+            <path d="M 30 232 Q 100 234 175 230" stroke="#5a5048" stroke-width="0.6" fill="none" opacity="0.6"/>
+          </svg>
+        </div>
+
+        <div class="label-tags">
+          <span>Berghaupten</span>
+          <span class="bioland-badge">Bioland</span>
+          <span>DE-ÖKO-XXX</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee">
+  <div class="marquee-track">
+    <span>Kräuterseitlinge</span>
+    <span>Shiitake</span>
+    <span>Austernseitlinge</span>
+    <span>Limonenseitlinge</span>
+    <span>Kräuterseitlinge</span>
+    <span>Shiitake</span>
+    <span>Austernseitlinge</span>
+    <span>Limonenseitlinge</span>
+    <span>Kräuterseitlinge</span>
+    <span>Shiitake</span>
+    <span>Austernseitlinge</span>
+    <span>Limonenseitlinge</span>
+  </div>
+</div>
+
+<section class="sorten" id="sorten">
+  <div class="section-header">
+    <div class="section-label">Unsere Sorten</div>
+    <h2>Wir starten mit dem Kräuterseitling —<br><em>weitere Sorten folgen.</em></h2>
+  </div>
+
+  <div class="sorten-grid">
+
+    <article class="sorte-card">
+      <span class="sorte-status available">Im Hofladen</span>
+      <div class="sorte-number">N° 01</div>
+      <div class="sorte-illustration">
+        <!-- Kräuterseitling -->
+        <svg viewBox="0 0 140 120" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="h3" patternUnits="userSpaceOnUse" width="2.2" height="2.2" patternTransform="rotate(45)">
+              <line x1="0" y1="0" x2="0" y2="2.2" stroke="#2a2622" stroke-width="0.3"/>
+            </pattern>
+          </defs>
+          <!-- Kleiner Hut auf dickem Stiel -->
+          <path d="M 48 32 Q 48 22 70 20 Q 92 22 92 32 Q 92 40 88 42 L 52 42 Q 48 40 48 32 Z"
+                fill="url(#h3)" stroke="#2a2622" stroke-width="1"/>
+          <!-- Dicker, fester Stiel -->
+          <path d="M 52 42 Q 48 60 50 95 Q 52 110 70 112 Q 88 110 90 95 Q 92 60 88 42"
+                fill="#f5f2ea" stroke="#2a2622" stroke-width="1"/>
+          <path d="M 58 52 Q 56 80 58 105" fill="none" stroke="#5a5048" stroke-width="0.4"/>
+          <path d="M 82 52 Q 84 80 82 105" fill="none" stroke="#5a5048" stroke-width="0.4"/>
+          <path d="M 70 50 Q 70 80 70 108" fill="none" stroke="#5a5048" stroke-width="0.3" opacity="0.6"/>
+        </svg>
+      </div>
+      <h3>Kräuterseitling</h3>
+      <div class="sorte-latin">Pleurotus eryngii</div>
+      <p>Festes, weißes Fleisch mit leichter Süße. Lässt sich wie Fleisch braten und behält dabei seine Form. Unsere erste Sorte — und ein Pilz, der die Mitte des Tellers verdient.</p>
+    </article>
+
+    <article class="sorte-card upcoming">
+      <span class="sorte-status">In Vorbereitung</span>
+      <div class="sorte-number">N° 02</div>
+      <div class="sorte-illustration">
+        <!-- Shiitake -->
+        <svg viewBox="0 0 140 120" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="h2" patternUnits="userSpaceOnUse" width="2.5" height="2.5" patternTransform="rotate(45)">
+              <line x1="0" y1="0" x2="0" y2="2.5" stroke="#2a2622" stroke-width="0.35"/>
+            </pattern>
+          </defs>
+          <!-- Großer kuppelförmiger Hut -->
+          <ellipse cx="70" cy="48" rx="42" ry="28" fill="url(#h2)" stroke="#2a2622" stroke-width="1.1"/>
+          <!-- Charakteristische Risse im Hut -->
+          <path d="M 45 38 Q 50 36 56 40" fill="none" stroke="#2a2622" stroke-width="0.5"/>
+          <path d="M 65 32 Q 72 34 76 38" fill="none" stroke="#2a2622" stroke-width="0.5"/>
+          <path d="M 85 36 Q 92 40 95 44" fill="none" stroke="#2a2622" stroke-width="0.5"/>
+          <path d="M 55 50 Q 62 54 70 52" fill="none" stroke="#2a2622" stroke-width="0.4"/>
+          <!-- Stiel -->
+          <path d="M 58 72 Q 56 90 60 108 Q 65 112 75 112 Q 84 112 88 108 Q 90 90 84 72"
+                fill="#f5f2ea" stroke="#2a2622" stroke-width="1"/>
+          <path d="M 64 80 Q 63 100 65 108" fill="none" stroke="#5a5048" stroke-width="0.4"/>
+        </svg>
+      </div>
+      <h3>Shiitake</h3>
+      <div class="sorte-latin">Lentinula edodes</div>
+      <p>Würzig-umami und fleischig in der Textur. Wird langsam auf gepressten Hartholzblöcken reifen und dabei eine außergewöhnliche Tiefe im Geschmack entwickeln.</p>
+    </article>
+
+    <article class="sorte-card upcoming">
+      <span class="sorte-status">In Vorbereitung</span>
+      <div class="sorte-number">N° 03</div>
+      <div class="sorte-illustration">
+        <!-- Austernseitling -->
+        <svg viewBox="0 0 140 120" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="h1" patternUnits="userSpaceOnUse" width="2.2" height="2.2" patternTransform="rotate(40)">
+              <line x1="0" y1="0" x2="0" y2="2.2" stroke="#2a2622" stroke-width="0.3"/>
+            </pattern>
+          </defs>
+          <!-- Mehrere überlappende Hüte (typisch Austernpilz) -->
+          <path d="M 25 70 Q 15 50 35 38 Q 60 30 85 42 Q 100 50 95 70 Q 90 80 60 80 Q 30 80 25 70 Z"
+                fill="url(#h1)" stroke="#2a2622" stroke-width="1"/>
+          <path d="M 65 78 Q 60 85 65 105 Q 70 110 78 110 Q 86 110 90 105 Q 92 90 88 78"
+                fill="#f5f2ea" stroke="#2a2622" stroke-width="0.9"/>
+          <path d="M 55 65 Q 60 75 78 78" fill="none" stroke="#2a2622" stroke-width="0.5"/>
+          <!-- Zweiter Hut -->
+          <path d="M 80 60 Q 75 40 100 32 Q 122 28 132 50 Q 130 65 110 68 Q 88 68 80 60 Z"
+                fill="url(#h1)" stroke="#2a2622" stroke-width="1"/>
+        </svg>
+      </div>
+      <h3>Austernseitling</h3>
+      <div class="sorte-latin">Pleurotus ostreatus</div>
+      <p>Mild-nussig mit zarter Bissfestigkeit. Wächst in eleganten Trauben auf Buchensubstrat. Gebraten oder in cremigen Saucen gleichermaßen überzeugend.</p>
+    </article>
+
+    <article class="sorte-card upcoming">
+      <span class="sorte-status">In Vorbereitung</span>
+      <div class="sorte-number">N° 04</div>
+      <div class="sorte-illustration">
+        <!-- Limonenseitling -->
+        <svg viewBox="0 0 140 120" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="h5" patternUnits="userSpaceOnUse" width="2" height="2" patternTransform="rotate(0)">
+              <line x1="0" y1="0" x2="0" y2="2" stroke="#2a2622" stroke-width="0.3"/>
+            </pattern>
+          </defs>
+          <!-- Trichterförmige Hüte -->
+          <path d="M 28 50 Q 22 30 45 22 Q 70 18 72 38 Q 70 50 60 52 Q 35 52 28 50 Z"
+                fill="url(#h5)" stroke="#2a2622" stroke-width="1"/>
+          <path d="M 45 52 Q 42 70 46 95 Q 50 105 58 105 Q 65 102 64 95 Q 62 70 58 52"
+                fill="#f5f2ea" stroke="#2a2622" stroke-width="0.9"/>
+
+          <path d="M 65 60 Q 60 38 85 32 Q 110 30 115 50 Q 113 62 100 64 Q 75 64 65 60 Z"
+                fill="url(#h5)" stroke="#2a2622" stroke-width="1"/>
+          <path d="M 82 64 Q 80 80 84 105 Q 88 112 96 112 Q 102 110 102 105 Q 100 80 96 64"
+                fill="#f5f2ea" stroke="#2a2622" stroke-width="0.9"/>
+        </svg>
+      </div>
+      <h3>Limonenseitling</h3>
+      <div class="sorte-latin">Pleurotus citrinopileatus</div>
+      <p>Leuchtend gelb und zitrusartig im Aroma. Wird ein optisches und kulinarisches Highlight — kurz angebraten in feinen Pastagerichten unschlagbar.</p>
+    </article>
+
+  </div>
+</section>
+
+<section class="philosophie" id="philosophie">
+  <div class="philosophie-content">
+    <div>
+      <div class="section-label">Unsere Philosophie</div>
+      <h2 style="margin-top: 24px; margin-bottom: 36px;">Gut Ding<br><em>will Weile haben.</em></h2>
+      <div class="philosophie-text">
+        <p>
+          Wir glauben, dass guter Geschmack mit Geduld beginnt. Unsere Pilze wachsen ohne Wachstumsbeschleuniger, ohne Kunstlicht-Tricksereien und ohne Eile. Was bei industriellen Betrieben in zwei Wochen gepresst wird, lassen wir reifen — bis Aroma, Konsistenz und Form wirklich stimmen.
+        </p>
+        <p>
+          Unser Substrat besteht aus Bio-Stroh und Buchenholz aus dem Schwarzwald. Nach der Ernte geht es zurück auf die Felder als Humus. Ein geschlossener Kreislauf, wie er sein soll.
+        </p>
+      </div>
+    </div>
+    <div class="philosophie-quote">
+      "Pilze sind keine Massenware. Sie sind Lebewesen, die Zeit, Ruhe und ein gutes Substrat brauchen — den Rest erledigen sie selbst."
+      <span class="philosophie-quote-author">Familie Zapf · Berghaupten</span>
+    </div>
+  </div>
+</section>
+
+<section class="prozess" id="prozess">
+  <div class="section-header">
+    <div class="section-label">So entstehen unsere Pilze</div>
+    <h2>Vom Stroh<br><em>auf den Teller.</em></h2>
+  </div>
+
+  <div class="prozess-grid">
+    <div class="prozess-step">
+      <div class="prozess-step-num">N° 01</div>
+      <h4>Substrat</h4>
+      <p>Wir pasteurisieren regionales Bio-Stroh und Buchenholz. Ohne Chemie, nur mit Wasserdampf — so bleibt das Substrat lebendig.</p>
+    </div>
+    <div class="prozess-step">
+      <div class="prozess-step-num">N° 02</div>
+      <h4>Beimpfung</h4>
+      <p>Eigenes Pilzmyzel wird in das vorbereitete Substrat eingebracht. Jede Sorte erhält ihr passendes Nährmedium.</p>
+    </div>
+    <div class="prozess-step">
+      <div class="prozess-step-num">N° 03</div>
+      <h4>Reifung</h4>
+      <p>In klimatisierten Reifräumen durchwachsen die Pilze ihr Substrat. Temperatur, Licht und Luftfeuchte werden täglich kontrolliert.</p>
+    </div>
+    <div class="prozess-step">
+      <div class="prozess-step-num">N° 04</div>
+      <h4>Handernte</h4>
+      <p>Geerntet wird ausschließlich von Hand, im richtigen Reifegrad. Verpackt am selben Tag, im Hofladen am nächsten.</p>
+    </div>
+  </div>
+</section>
+
+<section class="hofladen" id="hofladen">
+  <div class="hofladen-content">
+    <div>
+      <div class="section-label">Hofladen & Direktverkauf</div>
+      <h2 style="margin-top: 24px;">Kommen Sie<br><em>auf einen Sprung vorbei.</em></h2>
+      <p style="margin-top: 32px; color: var(--ink-soft); font-size: 16px; line-height: 1.75; max-width: 460px;">
+        Frische Edelpilze, Trockenpilze, Pilzsalz und unsere hausgemachten Aufstriche bekommen Sie direkt bei uns am Hof. Wir freuen uns auf Ihren Besuch — gerne mit Korb und Zeit für ein Gespräch.
+      </p>
+    </div>
+
+    <ul class="info-list">
+      <li>
+        <span class="info-label">Adresse</span>
+        <span class="info-value">Heiligenreute 9<br>77791 Berghaupten</span>
+      </li>
+      <li>
+        <span class="info-label">Öffnungszeiten</span>
+        <span class="info-value">Mi & Fr · 9 – 18 Uhr<br>Sa · 8 – 13 Uhr</span>
+      </li>
+      <li>
+        <span class="info-label">Telefon</span>
+        <span class="info-value">+49 7803 12 34 56</span>
+      </li>
+      <li>
+        <span class="info-label">Wochenmarkt</span>
+        <span class="info-value">Offenburg</span>
+      </li>
+      <li>
+        <span class="info-label">Zertifizierung</span>
+        <span class="info-value">Bioland · DE-ÖKO-XXX</span>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <a href="#" class="logo">
+        <span class="logo-top">ZAPF'S</span>
+        <span class="logo-bottom">BIOHOF</span>
+      </a>
+      <p class="footer-tagline">
+        Bio-Edelpilze aus Berghaupten. Mit Geduld gewachsen, von Hand geerntet.
+      </p>
+    </div>
+
+    <div class="footer-col">
+      <h5>Entdecken</h5>
+      <ul>
+        <li><a href="#sorten">Unsere Sorten</a></li>
+        <li><a href="#philosophie">Philosophie</a></li>
+        <li><a href="#prozess">Aufzucht</a></li>
+        <li><a href="#hofladen">Hofladen</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h5>Besuchen</h5>
+      <ul>
+        <li>Heiligenreute 9</li>
+        <li>77791 Berghaupten</li>
+        <li>+49 7803 12 34 56</li>
+        <li>hallo@zapf-bio.de</li>
+        <li><a href="https://instagram.com/zapfbio" target="_blank" rel="noopener">Instagram</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2026 Zapf's Biohof · Familie Zapf</span>
+    <span>Impressum · Datenschutz</span>
+  </div>
+</footer>
+
+</body>
+</html>
