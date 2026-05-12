@@ -15,10 +15,9 @@ Live: https://zapf-bio.github.io/website/ (Custom Domain folgt: zapf-bio.de)
 │   ├── Austernseitling.png
 │   ├── Shiitake.png
 │   └── Zitronenseitling.png
-└── fonts/                  ← noch anzulegen (siehe unten)
+└── fonts/
     ├── cormorant-garamond-300.woff2
     ├── cormorant-garamond-400.woff2
-    ├── cormorant-garamond-400-italic.woff2
     ├── cormorant-garamond-500.woff2
     ├── cormorant-garamond-600.woff2
     ├── inter-300.woff2
@@ -26,16 +25,12 @@ Live: https://zapf-bio.github.io/website/ (Custom Domain folgt: zapf-bio.de)
     └── inter-500.woff2
 ```
 
-## Schriftarten (lokal, noch ausstehend)
+## Schriftarten (lokal)
 
-`impressum.html` und `datenschutz.html` laden Schriften lokal aus `/fonts/`. Einmalig herunterladen via [google-webfonts-helper](https://gwfh.mranftl.com/fonts):
+Alle HTML-Seiten laden Schriften lokal aus `/fonts/` via `@font-face`:
 
-1. **Cormorant Garamond** — Gewichte 300, 400, 400 italic, 500, 600 (Format: Modern Browsers / woff2)
-2. **Inter** — Gewichte 300, 400, 500
-
-Dateien wie oben angegeben benennen und in `/fonts/` ablegen.
-
-> `index.html` lädt Schriften aktuell noch über Google Fonts. Vor dem Live-Gang auf lokale Fonts umstellen.
+- **Cormorant Garamond** — Gewichte 300, 400, 500, 600
+- **Inter** — Gewichte 300, 400, 500
 
 ## Platzhalter ersetzen
 
@@ -63,8 +58,8 @@ Dann unter **Settings → Pages → Custom domain**: `zapf-bio.de` eintragen und
 ## Pre-Launch-Checkliste
 
 - [ ] Alle `[PLATZHALTER: ...]` ersetzt
-- [ ] Schriftdateien in `/fonts/` liegen
-- [ ] `index.html` auf lokale Fonts umgestellt
-- [ ] Footer-Links zu Impressum und Datenschutz funktionieren
-- [ ] Auf Mobilgeräten getestet
+- [x] Schriftdateien in `/fonts/` liegen
+- [x] `index.html` auf lokale Fonts umgestellt
+- [x] Footer-Links zu Impressum und Datenschutz funktionieren
+- [x] Auf Mobilgeräten getestet
 - [ ] Custom Domain eingerichtet und HTTPS aktiv
